@@ -10,6 +10,7 @@ dotenv.config();
 const { connectDB } = require("./utils/db-config");
 const { errorHandler, notFound } = require("./middleware/error");
 const Routes = require("./routes");
+const UserModel = require("./models/User.model");
 
 connectDB();
 const app = express();
@@ -28,7 +29,9 @@ app.get("/", (req, res) => {
 
 // Error Handling middlewares
 app.use(notFound);
+
 app.use(errorHandler);
+
 const server = app.listen(PORT, () =>
   console.log(`server running at PORT:${PORT} successfully`)
 );

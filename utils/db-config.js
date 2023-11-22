@@ -1,5 +1,4 @@
 const { Sequelize } = require("sequelize");
-const makeAssociations = require("./makeAssociations");
 
 const sequelize = new Sequelize(
   process.env.DB_NAME,
@@ -12,7 +11,7 @@ const sequelize = new Sequelize(
 );
 
 async function connectDB() {
-  await sequelize.sync({ force: true });
+  await sequelize.sync({});
 }
 module.exports = {
   sequelize,

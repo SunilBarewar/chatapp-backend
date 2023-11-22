@@ -1,7 +1,6 @@
 const { DataTypes } = require("sequelize");
 
 const { sequelize } = require("../utils/db-config");
-const UserModel = require("./User.model");
 
 const ChatModel = sequelize.define("chat", {
   chatID: {
@@ -37,12 +36,4 @@ const ChatModel = sequelize.define("chat", {
   },
 });
 
-UserModel.hasMany(ChatModel, {
-  foreignKey: "groupAdmin",
-  onDelete: "CASCADE",
-});
-ChatModel.belongsTo(UserModel, {
-  foreignKey: "groupAdmin",
-  as: "GroupAdmin",
-});
 module.exports = ChatModel;

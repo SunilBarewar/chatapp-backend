@@ -5,8 +5,6 @@ const UserModel = require("../models/User.model");
 const protect = asyncHandler(async (req, res, next) => {
   try {
     const authorizationToken = req.header("Authorization");
-    console.log(authorizationToken);
-    console.log(process.env.JWT_SECRET_KEY);
     const { userId } = jwt.verify(
       authorizationToken,
       process.env.JWT_SECRET_KEY
@@ -20,7 +18,6 @@ const protect = asyncHandler(async (req, res, next) => {
     req.user = user;
     next();
   } catch (error) {
-    console.log(error);
     res.status(401);
     throw new Error("Not authorized, invalid token");
   }
