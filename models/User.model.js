@@ -24,6 +24,7 @@ const UserModel = sequelize.define("user", {
   },
   profilePic: {
     type: DataTypes.STRING,
+    defaultValue: "https://i.pravatar.cc/200",
   },
 });
 

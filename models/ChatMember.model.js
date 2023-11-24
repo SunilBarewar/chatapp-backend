@@ -11,7 +11,7 @@ const ChatMemberModel = sequelize.define(
       allowNull: false,
       references: {
         model: "chats",
-        key: "chatID",
+        key: "id",
       },
       onDelete: "CASCADE",
     },
@@ -23,6 +23,11 @@ const ChatMemberModel = sequelize.define(
         key: "id",
       },
       onDelete: "CASCADE",
+    },
+    // chatType can be "group", "single"
+    chatType: {
+      type: DataTypes.STRING,
+      defaultValue: "single",
     },
   },
   {

@@ -11,8 +11,10 @@ const { connectDB } = require("./utils/db-config");
 const { errorHandler, notFound } = require("./middleware/error");
 const Routes = require("./routes");
 const UserModel = require("./models/User.model");
+const database = require("./models");
 
-connectDB();
+// connectDB();
+database();
 const app = express();
 
 app.use(cors());

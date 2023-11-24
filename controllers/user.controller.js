@@ -2,7 +2,8 @@ const UserModel = require("../models/User.model");
 const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcrypt");
 const generateAccessToken = require("../utils/generateAccessToken");
-const { Op } = require("sequelize");
+const { Op, QueryTypes } = require("sequelize");
+const { sequelize } = require("../utils/db-config");
 
 /**
  *
@@ -78,25 +79,35 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
 
 exports.allUsers = asyncHandler(async (req, res) => {
   const { search } = req.query;
+
   const keyword = search
     ? {
         [Op.or]: [
-          { name: { [Op.iLike]: `%${search}%` } },
-          { email: { [Op.iLike]: `%${search}%` } },
+          {
+            name: {
+              [Op.like]: `%${search}%`,
+            },
+          },
+          {
+            email: {
+              [Op.like]: `%${search}%`,
+            },
+          },
         ],
       }
     : {};
 
   const users = await UserModel.findAll({
+    attributes: {
+      exclude: ["password", "createdAt", "updatedAt"],
+    },
     where: {
       ...keyword,
       id: {
         [Op.ne]: req.user.id,
       },
     },
-    attributes: {
-      exclude: ["password"],
-    },
   });
+
   res.status(200).json(users);
 });

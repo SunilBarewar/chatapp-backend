@@ -11,7 +11,7 @@ const sequelize = new Sequelize(
 );
 
 async function connectDB() {
-  await sequelize.sync({});
+  await sequelize.sync({ force: true });
 }
 module.exports = {
   sequelize,
