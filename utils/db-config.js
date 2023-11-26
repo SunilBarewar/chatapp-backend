@@ -10,10 +10,4 @@ const sequelize = new Sequelize(
   }
 );
 
-async function connectDB() {
-  await sequelize.sync({ force: true });
-}
-module.exports = {
-  sequelize,
-  connectDB,
-};
+module.exports = sequelize;

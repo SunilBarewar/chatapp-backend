@@ -1,20 +1,14 @@
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
-const fs = require("fs");
 const dotenv = require("dotenv");
 const helmet = require("helmet");
-const morgan = require("morgan");
 dotenv.config();
 
-const { connectDB } = require("./utils/db-config");
+const connectDB = require("./models");
 const { errorHandler, notFound } = require("./middleware/error");
 const Routes = require("./routes");
-const UserModel = require("./models/User.model");
-const database = require("./models");
 
-// connectDB();
-database();
 const app = express();
 
 app.use(cors());
@@ -34,6 +28,7 @@ app.use(notFound);
 
 app.use(errorHandler);
 
+connectDB();
 const server = app.listen(PORT, () =>
   console.log(`server running at PORT:${PORT} successfully`)
 );
