@@ -1,33 +1,20 @@
 const { DataTypes } = require("sequelize");
 
-const { sequelize } = require("../utils/db-config");
+const sequelize = require("../utils/db-config");
 
 // Define the ChatMembers model
 const ChatMemberModel = sequelize.define(
   "chatmember",
   {
-    chatID: {
+    id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: "chats",
-        key: "id",
-      },
-      onDelete: "CASCADE",
+      primaryKey: true,
+      autoIncrement: true,
     },
-    userID: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: "users",
-        key: "id",
-      },
-      onDelete: "CASCADE",
-    },
-    // chatType can be "group", "single"
-    chatType: {
-      type: DataTypes.STRING,
-      defaultValue: "single",
+
+    isGroupMember: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true, // Default to true for group members
     },
   },
   {

@@ -1,6 +1,6 @@
 const { DataTypes } = require("sequelize");
 
-const { sequelize } = require("../utils/db-config");
+const sequelize = require("../utils/db-config");
 
 const ChatModel = sequelize.define(
   "chat",
@@ -17,25 +17,6 @@ const ChatModel = sequelize.define(
     chatName: {
       type: DataTypes.STRING,
       defaultValue: "chat",
-    },
-    latestMessage: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: "messages",
-        key: "id",
-      },
-      onDelete: "CASCADE",
-    },
-
-    groupAdmin: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: "users",
-        key: "id",
-      },
-      onDelete: "CASCADE",
     },
   },
   {

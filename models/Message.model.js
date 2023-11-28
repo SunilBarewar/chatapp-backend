@@ -1,6 +1,6 @@
 const { DataTypes } = require("sequelize");
 
-const { sequelize } = require("../utils/db-config");
+const sequelize = require("../utils/db-config");
 
 const MessageModel = sequelize.define(
   "message",
@@ -9,24 +9,6 @@ const MessageModel = sequelize.define(
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
-    },
-    chatID: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: "chats",
-        key: "id",
-      },
-      onDelete: "CASCADE",
-    },
-    senderID: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: "users",
-        key: "id",
-      },
-      onDelete: "CASCADE",
     },
     content: {
       type: DataTypes.TEXT,
