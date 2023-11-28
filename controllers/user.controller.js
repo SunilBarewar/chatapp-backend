@@ -2,8 +2,7 @@ const UserModel = require("../models/User.model");
 const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcrypt");
 const generateAccessToken = require("../utils/generateAccessToken");
-const { Op, QueryTypes } = require("sequelize");
-const { sequelize } = require("../utils/db-config");
+const { Op } = require("sequelize");
 
 /**
  *
