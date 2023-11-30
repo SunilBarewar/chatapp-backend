@@ -3,11 +3,15 @@ const cors = require("cors");
 const path = require("path");
 const dotenv = require("dotenv");
 const helmet = require("helmet");
+const cron = require("node-cron");
 dotenv.config();
 
 const connectDB = require("./models");
 const { errorHandler, notFound } = require("./middleware/error");
 const Routes = require("./routes");
+const sockets = require("./socket/sockets");
+
+const archieveOldMessages = require("./controllers/archievedMessages.controller");
 
 const app = express();
 
@@ -32,3 +36,17 @@ connectDB();
 const server = app.listen(PORT, () =>
   console.log(`server running at PORT:${PORT} successfully`)
 );
+
+const io = require("socket.io")(server, {
+  pingTimeout: 60000,
+  cors: {
+    origin: "http://localhost:5173",
+    // credentials: true,
+  },
+});
+
+io.on("connection", sockets);
+
+cron.schedule("0 0 * * *", async () => {
+  await archieveOldMessages();
+});
