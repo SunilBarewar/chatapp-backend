@@ -78,23 +78,25 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
 
 exports.allUsers = asyncHandler(async (req, res) => {
   const { search } = req.query;
+  let keyword = {};
 
-  const keyword = search
-    ? {
-        [Op.or]: [
-          {
-            name: {
-              [Op.like]: `%${search}%`,
-            },
+  if (search !== "undefined" && search) {
+    console.log("inside");
+    keyword = {
+      [Op.or]: [
+        {
+          name: {
+            [Op.like]: `%${search}%`,
           },
-          {
-            email: {
-              [Op.like]: `%${search}%`,
-            },
+        },
+        {
+          email: {
+            [Op.like]: `%${search}%`,
           },
-        ],
-      }
-    : {};
+        },
+      ],
+    };
+  }
 
   const users = await UserModel.findAll({
     attributes: {

@@ -1,6 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const ChatMemberModel = require("../models/ChatMember.model");
-const { Op} = require("sequelize");
+const { Op } = require("sequelize");
 const sequelize = require("../utils/db-config");
 const ChatModel = require("../models/Chat.model");
 const UserModel = require("../models/User.model");
@@ -20,7 +20,7 @@ const createOneOnOneChat = asyncHandler(async (req, res) => {
     group: ["chatID"],
     having: sequelize.literal("COUNT(DISTINCT `userID`) = 2"),
   });
-  let chatId, createdChat;
+  let chatId;
 
   if (!existingChat) {
     const newChat = await ChatModel.create({
@@ -28,7 +28,6 @@ const createOneOnOneChat = asyncHandler(async (req, res) => {
       chatName: "chat",
     });
     chatId = newChat.id;
-    createdChat = true;
     // Add users to the new chat
     await ChatMemberModel.bulkCreate([
       { userID: userId, chatID: newChat.id, isGroupMember: false },
@@ -36,7 +35,6 @@ const createOneOnOneChat = asyncHandler(async (req, res) => {
     ]);
   } else {
     chatId = existingChat.chatID;
-    createdChat = false;
   }
 
   const chat = await ChatModel.findByPk(chatId, {
@@ -52,7 +50,7 @@ const createOneOnOneChat = asyncHandler(async (req, res) => {
       },
     ],
   });
-  return res.status(200).json({ chat, createdChat });
+  return res.status(200).json(chat);
 });
 
 const fetchChats = asyncHandler(async (req, res) => {

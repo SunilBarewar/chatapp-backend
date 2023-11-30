@@ -60,7 +60,9 @@ const connectDB = async () => {
     as: "groupAdmin",
   });
 
-  await sequelize.sync({});
+  await sequelize.sync({}).then(() => {
+    console.log("connected to db");
+  });
 };
 
 module.exports = connectDB;
