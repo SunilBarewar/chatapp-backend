@@ -4,3 +4,5 @@ node_modules
 MOCK_DATA.json
 
 usersData.js
+
+ca.pem
