@@ -16,13 +16,13 @@ const allMessages = asyncHandler(async (req, res) => {
 });
 
 const sendMessage = asyncHandler(async (req, res) => {
-  const { content, contentType, chatId } = req.body;
+  const { content, contentType, chatID } = req.body;
   const { id } = req.user;
 
   const message = await MessageModel.create({
     content,
     contentType,
-    chatID: chatId,
+    chatID: chatID,
     senderID: id,
   });
 
@@ -30,7 +30,7 @@ const sendMessage = asyncHandler(async (req, res) => {
     { latestMessageID: message.id },
     {
       where: {
-        id: chatId,
+        id: chatID,
       },
     }
   );
